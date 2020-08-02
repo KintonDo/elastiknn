@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Scala Client
-nav_order: 3
+nav_order: 6
 description: "Documentation for the Elastiknn Scala Client"
 permalink: /scala-client/
 ---

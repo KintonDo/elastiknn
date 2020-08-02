@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Python Client
-nav_order: 3
+nav_order: 5
 description: "Documentation for the Elastiknn Python Client"
 permalink: /python-client/
 ---
