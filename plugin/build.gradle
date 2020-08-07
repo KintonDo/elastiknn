@@ -29,6 +29,8 @@ configurations {
 }
 
 dependencies {
+    runtime project(':api')
+    implementation project(':api')
     runtime project(':core')
     implementation project(':core')
     runtime project(':utils')
