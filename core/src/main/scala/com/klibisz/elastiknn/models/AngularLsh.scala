@@ -1,7 +1,7 @@
 package com.klibisz.elastiknn.models
 
 import com.klibisz.elastiknn.api.{Mapping, Vec}
-import com.klibisz.elastiknn.storage.{BitBuffer, StoredVec}
+import com.klibisz.elastiknn.storage.BitBuffer
 import com.klibisz.elastiknn.storage.UnsafeSerialization.writeInt
 
 import scala.util.Random
@@ -10,8 +10,7 @@ import scala.util.Random
   * Locality sensitive hashing for Angular similarity using random hyperplanes as described in MMDS Chapter 3.
   * @param mapping AngularLsh Mapping.
   */
-final class AngularLsh(override val mapping: Mapping.AngularLsh)
-    extends HashingFunction[Mapping.AngularLsh, Vec.DenseFloat, StoredVec.DenseFloat] {
+final class AngularLsh(override val mapping: Mapping.AngularLsh) extends HashingFunction[Mapping.AngularLsh, Vec.DenseFloat] {
 
   import mapping._
 

@@ -17,8 +17,7 @@ import scala.util.Random
   *                L: number of hash tables. Generally, higher L yields higher recall.
   *                k: number of randomly sampled bits for each hash function.
   */
-final class HammingLsh(override val mapping: Mapping.HammingLsh)
-    extends HashingFunction[Mapping.HammingLsh, Vec.SparseBool, StoredVec.SparseBool] {
+final class HammingLsh(override val mapping: Mapping.HammingLsh) extends HashingFunction[Mapping.HammingLsh, Vec.SparseBool] {
 
   import mapping._
   private val rng: Random = new Random(0)

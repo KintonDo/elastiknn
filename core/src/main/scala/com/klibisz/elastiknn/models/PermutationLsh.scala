@@ -2,15 +2,13 @@ package com.klibisz.elastiknn.models
 
 import com.google.common.collect.MinMaxPriorityQueue
 import com.klibisz.elastiknn.api._
-import com.klibisz.elastiknn.storage.StoredVec
 import com.klibisz.elastiknn.storage.UnsafeSerialization.writeInt
 
 /**
   * Hash by repeating the indices of the highest absolute value positions proportional to their rank in the vector.
   * Based on paper: Large Scale Image Retrieval with Elasticsearch, https://dl.acm.org/doi/pdf/10.1145/3209978.3210089
   */
-final class PermutationLsh(override val mapping: Mapping.PermutationLsh)
-    extends HashingFunction[Mapping.PermutationLsh, Vec.DenseFloat, StoredVec.DenseFloat] {
+final class PermutationLsh(override val mapping: Mapping.PermutationLsh) extends HashingFunction[Mapping.PermutationLsh, Vec.DenseFloat] {
 
   override def apply(vec: Vec.DenseFloat): Array[HashAndFreq] = {
 

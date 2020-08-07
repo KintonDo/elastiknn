@@ -25,8 +25,7 @@ import scala.util.Random
   *                L: number of hash tables. Generally, higher L yields higher recall.
   *                k: number of hash functions combined to generate a hash for each table. Generally, higher k yields higher precision.
   */
-final class JaccardLsh(override val mapping: Mapping.JaccardLsh)
-    extends HashingFunction[Mapping.JaccardLsh, Vec.SparseBool, StoredVec.SparseBool] {
+final class JaccardLsh(override val mapping: Mapping.JaccardLsh) extends HashingFunction[Mapping.JaccardLsh, Vec.SparseBool] {
 
   import mapping._
   private val rng: Random = new Random(0)

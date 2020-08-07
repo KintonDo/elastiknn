@@ -4,7 +4,6 @@ import java.util
 
 import com.google.common.collect.MinMaxPriorityQueue
 import com.klibisz.elastiknn.api.{Mapping, Vec}
-import com.klibisz.elastiknn.storage.StoredVec
 import com.klibisz.elastiknn.storage.UnsafeSerialization._
 
 import scala.annotation.tailrec
@@ -22,7 +21,7 @@ import scala.util.Random
   * - The shift and expand methods are smart enough to always generate valid perturbation sets, so you'll never append
   *   an invalid one to the heap. This simplifies the logic for Algorithm 1.
   */
-final class L2Lsh(override val mapping: Mapping.L2Lsh) extends HashingFunction[Mapping.L2Lsh, Vec.DenseFloat, StoredVec.DenseFloat] {
+final class L2Lsh(override val mapping: Mapping.L2Lsh) extends HashingFunction[Mapping.L2Lsh, Vec.DenseFloat] {
 
   import L2Lsh._
   import mapping._

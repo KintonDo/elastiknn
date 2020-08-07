@@ -3,10 +3,9 @@ package com.klibisz.elastiknn.query
 import com.google.common.cache._
 import com.klibisz.elastiknn.api._
 import com.klibisz.elastiknn.models._
-import com.klibisz.elastiknn.storage.StoredVec
 
 // The Lsh Functions tend to be expensive to instantiate (i.e. initializing hashing parameters), hence a cache.
-sealed trait HashingFunctionCache[M <: Mapping, V <: Vec, S <: StoredVec, F <: HashingFunction[M, V, S]] extends (M => F) { self =>
+sealed trait HashingFunctionCache[M <: Mapping, V <: Vec, F <: HashingFunction[M, V]] extends (M => F) { self =>
   private val cache: LoadingCache[M, F] = CacheBuilder.newBuilder
     .maximumSize(10)
     .build(new CacheLoader[M, F] {
@@ -17,19 +16,19 @@ sealed trait HashingFunctionCache[M <: Mapping, V <: Vec, S <: StoredVec, F <: H
 }
 
 object HashingFunctionCache {
-  implicit object Jaccard extends HashingFunctionCache[Mapping.JaccardLsh, Vec.SparseBool, StoredVec.SparseBool, JaccardLsh] {
+  implicit object Jaccard extends HashingFunctionCache[Mapping.JaccardLsh, Vec.SparseBool, JaccardLsh] {
     def load(m: Mapping.JaccardLsh): JaccardLsh = new JaccardLsh(m)
   }
-  implicit object Hamming extends HashingFunctionCache[Mapping.HammingLsh, Vec.SparseBool, StoredVec.SparseBool, HammingLsh] {
+  implicit object Hamming extends HashingFunctionCache[Mapping.HammingLsh, Vec.SparseBool, HammingLsh] {
     def load(m: Mapping.HammingLsh): HammingLsh = new HammingLsh(m)
   }
-  implicit object Angular extends HashingFunctionCache[Mapping.AngularLsh, Vec.DenseFloat, StoredVec.DenseFloat, AngularLsh] {
+  implicit object Angular extends HashingFunctionCache[Mapping.AngularLsh, Vec.DenseFloat, AngularLsh] {
     def load(m: Mapping.AngularLsh): AngularLsh = new AngularLsh(m)
   }
-  implicit object L2 extends HashingFunctionCache[Mapping.L2Lsh, Vec.DenseFloat, StoredVec.DenseFloat, L2Lsh] {
+  implicit object L2 extends HashingFunctionCache[Mapping.L2Lsh, Vec.DenseFloat, L2Lsh] {
     def load(m: Mapping.L2Lsh): L2Lsh = new L2Lsh(m)
   }
-  implicit object Permutation extends HashingFunctionCache[Mapping.PermutationLsh, Vec.DenseFloat, StoredVec.DenseFloat, PermutationLsh] {
+  implicit object Permutation extends HashingFunctionCache[Mapping.PermutationLsh, Vec.DenseFloat, PermutationLsh] {
     def load(m: Mapping.PermutationLsh): PermutationLsh = new PermutationLsh(m)
   }
 }

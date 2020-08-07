@@ -2,11 +2,10 @@ package com.klibisz.elastiknn.query
 
 import com.klibisz.elastiknn.api.{Mapping, Vec}
 import com.klibisz.elastiknn.models.{ExactSimilarityFunction, HashAndFreq, HashingFunction}
-import com.klibisz.elastiknn.storage.{StoredVec, UnsafeSerialization}
+import com.klibisz.elastiknn.storage.StoredVec
 import org.apache.lucene.document.Field
 import org.apache.lucene.index.{IndexReader, IndexableField, LeafReaderContext}
 import org.apache.lucene.search.{MatchHashesAndScoreQuery, Query}
-import org.apache.lucene.util.BytesRef
 import org.elasticsearch.index.mapper.MappedFieldType
 
 object HashingQuery {
@@ -42,7 +41,7 @@ object HashingQuery {
   def apply[M <: Mapping, V <: Vec, S <: StoredVec](field: String,
                                                     query: V,
                                                     candidates: Int,
-                                                    lshFunction: HashingFunction[M, V, S],
+                                                    lshFunction: HashingFunction[M, V],
                                                     exactFunction: ExactSimilarityFunction[V, S],
                                                     indexReader: IndexReader)(implicit codec: StoredVec.Codec[V, S]): Query =
     HashingQuery(field, query, candidates, lshFunction(query), exactFunction, indexReader)
@@ -50,11 +49,11 @@ object HashingQuery {
   /**
     * Hash and construct IndexableFields for a vector using the given LSH function.
     */
-  def index[M <: Mapping, V <: Vec: StoredVec.Encoder, S <: StoredVec, F <: HashingFunction[M, V, S]](
+  def index[M <: Mapping, V <: Vec: StoredVec.Encoder, S <: StoredVec, F <: HashingFunction[M, V]](
       field: String,
       fieldType: MappedFieldType,
       vec: V,
-      lshFunction: HashingFunction[M, V, S])(implicit lshFunctionCache: HashingFunctionCache[M, V, S, F]): Seq[IndexableField] = {
+      lshFunction: HashingFunction[M, V])(implicit lshFunctionCache: HashingFunctionCache[M, V, F]): Seq[IndexableField] = {
     val hashes = lshFunction(vec)
     ExactQuery.index(field, vec) ++ hashes.flatMap { h =>
       val f = new Field(field, h.getHash, fieldType)
