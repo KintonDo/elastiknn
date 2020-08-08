@@ -15,7 +15,6 @@ plugins {
 dependencies {
     implementation project(':api')
     implementation project(':utils')
-    implementation project(':lucene')
     runtime "org.scala-lang:scala-library:${scalaVersion}"
     implementation "org.scala-lang:scala-library:${scalaVersion}"
     compile "io.circe:circe-generic_${scalaVersion}:${circeVersion}"
