@@ -94,11 +94,11 @@ abstract class VectorMapper[V <: Vec: ElasticsearchCodec] { self =>
 
   protected val fieldType = new VectorMapper.FieldType(CONTENT_TYPE)
 
-  import com.klibisz.elastiknn.utils.CirceUtils.javaMapEncoder
+//  import com.klibisz.elastiknn.utils.CirceUtils.javaMapEncoder
 
   class TypeParser extends Mapper.TypeParser {
     override def parse(name: String, node: JavaJsonMap, parserContext: TypeParser.ParserContext): Mapper.Builder[_, _] = {
-      val mapping: Mapping = ElasticsearchCodec.decodeJsonGet[Mapping](node.asJson)
+      val mapping: Mapping = ??? // ElasticsearchCodec.decodeJsonGet[Mapping](node.asJson)
       val builder: Builder = new Builder(name, mapping)
       TypeParsers.parseField(builder, name, node, parserContext)
       node.clear()
@@ -146,7 +146,7 @@ abstract class VectorMapper[V <: Vec: ElasticsearchCodec] { self =>
       new FieldMapper(field, fieldType, defaultFieldType, context.indexSettings(), multiFieldsBuilder.build(this, context), copyTo) {
         override def parse(context: ParseContext): Unit = {
           val doc: ParseContext.Document = context.doc()
-          val json: Json = context.parser.map.asJson
+          val json: Json = ??? // context.parser.map.asJson
           val vec = ElasticsearchCodec.decodeJsonGet[V](json)
           val fields = self.checkAndCreateFields(mapping, name, vec).get
           fields.foreach(doc.add)

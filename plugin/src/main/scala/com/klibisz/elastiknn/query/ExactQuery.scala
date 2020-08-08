@@ -15,7 +15,7 @@ import org.elasticsearch.common.lucene.search.function._
 
 object ExactQuery {
 
-  private class ExactScoreFunction[V <: Vec, S <: StoredVec](val field: String, val queryVec: V, val simFunc: ExactSimilarityFunction[V, S])(
+  private class ExactScoreFunction[V <: Vec, S <: StoredVec](val field: String, val queryVec: V, val simFunc: (V, S) => Double)(
       implicit codec: StoredVec.Codec[V, S])
       extends ScoreFunction(CombineFunction.REPLACE) {
 
@@ -58,7 +58,7 @@ object ExactQuery {
   /**
     * Instantiate an exact query, implemented as an Elasticsearch [[FunctionScoreQuery]].
     */
-  def apply[V <: Vec, S <: StoredVec](field: String, queryVec: V, simFunc: ExactSimilarityFunction[V, S])(
+  def apply[V <: Vec, S <: StoredVec](field: String, queryVec: V, simFunc: (V, S) => Double)(
       implicit codec: StoredVec.Codec[V, S]): FunctionScoreQuery = {
     val subQuery = new DocValuesFieldExistsQuery(vecDocValuesField(field))
     val func = new ExactScoreFunction(field, queryVec, simFunc)

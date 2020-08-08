@@ -39,8 +39,8 @@ dependencies {
     implementation project(':lucene')
     runtime "org.scala-lang:scala-library:${scalaVersion}"
     implementation "org.scala-lang:scala-library:${scalaVersion}"
-    implementation "com.google.guava:guava:28.1-jre"
     runtime "com.google.guava:guava:28.1-jre"
+    implementation "com.google.guava:guava:28.1-jre"
 }
 
 esplugin {

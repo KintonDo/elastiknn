@@ -6,7 +6,11 @@ import io.circe.{Json, JsonObject}
 import org.scalatest.{FunSuite, Matchers}
 import scala.collection.JavaConverters._
 
-class CirceUtilsSuite extends FunSuite with Matchers with CirceUtils {
+class CirceUtilsSuite
+    extends FunSuite
+    with Matchers
+    // with CirceUtils
+    {
 
   val map = new java.util.HashMap[String, Object] {
     put("foo", Integer.valueOf(1))
@@ -20,31 +24,31 @@ class CirceUtilsSuite extends FunSuite with Matchers with CirceUtils {
     )
   }
 
-  test("encode scala map to json") {
-    val encoded = javaMapEncoder(map)
-    encoded shouldBe Json.fromJsonObject(
-      JsonObject(
-        "foo" -> Json.fromInt(1),
-        "bar" -> Json.fromJsonObject(JsonObject(
-          "nums" -> Json.fromValues(
-            Seq(
-              Json.fromInt(1),
-              Json.fromInt(2),
-              Json.fromInt(3)
-            )),
-          "strings" -> Json.fromValues(
-            Seq(
-              Json.fromString("one"),
-              Json.fromString("two"),
-              Json.fromString("three")
-            )),
-          "anys" -> Json.fromValues(Seq(
-            Json.fromString("string"),
-            Json.fromInt(42)
-          ))
-        ))
-      ))
-
-  }
+//  test("encode scala map to json") {
+//    val encoded = javaMapEncoder(map)
+//    encoded shouldBe Json.fromJsonObject(
+//      JsonObject(
+//        "foo" -> Json.fromInt(1),
+//        "bar" -> Json.fromJsonObject(JsonObject(
+//          "nums" -> Json.fromValues(
+//            Seq(
+//              Json.fromInt(1),
+//              Json.fromInt(2),
+//              Json.fromInt(3)
+//            )),
+//          "strings" -> Json.fromValues(
+//            Seq(
+//              Json.fromString("one"),
+//              Json.fromString("two"),
+//              Json.fromString("three")
+//            )),
+//          "anys" -> Json.fromValues(Seq(
+//            Json.fromString("string"),
+//            Json.fromInt(42)
+//          ))
+//        ))
+//      ))
+//
+//  }
 
 }
